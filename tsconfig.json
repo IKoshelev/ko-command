@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "sourceMap": true,
+		"watch": true
+    },
+	"exclude": [
+        "node_modules"
+    ]
+
+}

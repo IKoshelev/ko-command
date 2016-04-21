@@ -1,0 +1,29 @@
+{
+  "name": "ko-command",
+  "version": "0.0.1",
+  "description": "Implementation of command pattern for Knockout JS. Made to be Promise friendly.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./node_modules/karma/bin/karma start karma.conf.js"
+  },
+  "devDependencies": {
+    "jasmine-core": "*",
+    "karma": "*",
+    "karma-chrome-launcher": "*",
+    "karma-firefox-launcher": "*",
+    "karma-ie-launcher": "*",
+    "karma-jasmine": "*",
+    "knockout": "*",
+    "q": "*",
+    "jquery": "*",
+    "tsd": "*"
+  },
+  "keywords": [
+    "knockout",
+    "command",
+    "knockout-command",
+    "ko-command"
+  ],
+  "author": "koshelew@gmail.com",
+  "license": "ISC"
+}
