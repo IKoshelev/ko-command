@@ -146,7 +146,6 @@ interface KnockoutBindingHandlers {
 			}
 			if(commandExecuteOnEnter){
 				(<HTMLElement>element).addEventListener("keydown",(event) => {
-					debugger;
 					if(event.which != 13 || command.canExecute() == false){
 						return;
 					}
