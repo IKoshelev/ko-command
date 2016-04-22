@@ -118,9 +118,12 @@ interface KnockoutBindingHandlers {
 	 
 	 function getCommandExecuteTriggers(element: HTMLElement):Array<string>{
 		 var name = element.tagName.toUpperCase(); 
-		 if(name == "BUTTON" || name == "A"){
+		 if(name == "BUTTON" 
+		 	|| name == "A" 
+			|| (name == "INPUT" && (<HTMLInputElement>element).type.toUpperCase() == "BUTTON")){
 			 return ["click"];
 		 }
+		 return [];
 	 }
 	 
  	ko.bindingHandlers.command = {
@@ -139,13 +142,15 @@ interface KnockoutBindingHandlers {
 
 			var commandExecuteOnEnter = ko.unwrap<boolean>(allBindingsAccessor.get('commandExecuteOnEnter'));
 			if(typeof commandExecuteOnEnter == "undefined"){
-				commandExecuteOnEnter = true;
+				commandExecuteOnEnter = false;
 			}
 			if(commandExecuteOnEnter){
 				(<HTMLElement>element).addEventListener("keydown",(event) => {
-					if(event.keyCode != 13 || command.canExecute() == false){
+					debugger;
+					if(event.which != 13 || command.canExecute() == false){
 						return;
 					}
+					event.preventDefault();
 					command.execute(viewModel, event);
 				});
 			}
@@ -159,7 +164,11 @@ interface KnockoutBindingHandlers {
 					}
 					command.execute(viewModel, event);
 				});
-			});		
+			});
+			
+			if(!commandExecuteOnEnter && commandExecuteOnEvents.length == 0){
+				throw new Error("Command has no triggers for execute.");
+			}	
 		 }
 	};
 	

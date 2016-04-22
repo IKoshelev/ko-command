@@ -8,6 +8,7 @@
   },
   "devDependencies": {
     "jasmine-core": "*",
+    "jquery": "*",
     "karma": "*",
     "karma-chrome-launcher": "*",
     "karma-firefox-launcher": "*",
@@ -15,7 +16,7 @@
     "karma-jasmine": "*",
     "knockout": "*",
     "q": "*",
-    "jquery": "*",
+    "simulant": "^0.2.0",
     "tsd": "*"
   },
   "keywords": [

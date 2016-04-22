@@ -213,10 +213,6 @@ describe("ko.command ",()=>{
 
 describe("ko.bindingHandlers.command ",()=>{
 	
-	//var idCounter = 0;
-	//function getUid(){
-	//	return "674920" + idCounter.toString();
-	//}
 	function getFreshElem(elemTagName = "button"){
 		var newElem = document.createElement(elemTagName);
 		document.body.appendChild(newElem);
@@ -313,6 +309,58 @@ describe("ko.bindingHandlers.command ",()=>{
 					 expect($elem.prop('disabled')).toBe(false);
 				 })
 				 .done(done);
+	});
+	
+	it("commands allow to specify triggers for execute in binding",()=>{
+						
+		var counter = 0;
+		var com = ko.command({
+			execute: () => {counter++;}
+		});
+
+ 		var $elem = $(createBinding(com, "command: com, commandExecuteOnEvents: ['mouseenter']"));
+		 		 
+		$elem.click();
+		 
+		expect(counter).toBe(0);
+
+		var evt = document.createEvent('MouseEvents');
+		evt.initEvent("mouseenter", true, true);
+		$elem[0].dispatchEvent(evt);
+		  		 
+		expect(counter).toBe(1);
+	});
+	
+	it("commands allow to specify triggers for execute in binding, but will throw if list is empty",()=>{
+						
+		var counter = 0;
+		var com = ko.command({
+			execute: () => {counter++;}
+		});
+
+ 		expect(() => createBinding(com, "command: com, commandExecuteOnEvents: []")).toThrow();	 		 
+	});
+	
+	it("binding can be instructed to trigger on 'enter' key",()=>{
+						
+		var elem = document.createElement("input");
+		elem.type = "text";
+		document.body.appendChild(elem);
+		elem.setAttribute("data-bind", "command: com, commandExecuteOnEnter: true ");
+		
+		var counter = 0;
+		ko.applyBindings({
+			com: ko.command({
+			execute: () => {counter++;}
+		}),
+		},elem);
+				
+		(<any>window).simulant.fire( elem, 'keydown', {
+			which: 13,
+			ctrlKey: true
+		});
+				
+		expect(counter).toBe(1);	 		 
 	});
 	
 });

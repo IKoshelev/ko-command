@@ -221,5 +221,42 @@ describe("ko.bindingHandlers.command ", function () {
         })
             .done(done);
     });
+    it("commands allow to specify triggers for execute in binding", function () {
+        var counter = 0;
+        var com = ko.command({
+            execute: function () { counter++; }
+        });
+        var $elem = $(createBinding(com, "command: com, commandExecuteOnEvents: ['mouseenter']"));
+        $elem.click();
+        expect(counter).toBe(0);
+        var evt = document.createEvent('MouseEvents');
+        evt.initEvent("mouseenter", true, true);
+        $elem[0].dispatchEvent(evt);
+        expect(counter).toBe(1);
+    });
+    it("commands allow to specify triggers for execute in binding, but will throw if list is empty", function () {
+        var counter = 0;
+        var com = ko.command({
+            execute: function () { counter++; }
+        });
+        expect(function () { return createBinding(com, "command: com, commandExecuteOnEvents: []"); }).toThrow();
+    });
+    it("binding can be instructed to trigger on 'enter' key", function () {
+        var elem = document.createElement("input");
+        elem.type = "text";
+        document.body.appendChild(elem);
+        elem.setAttribute("data-bind", "command: com, commandExecuteOnEnter: true ");
+        var counter = 0;
+        ko.applyBindings({
+            com: ko.command({
+                execute: function () { counter++; }
+            })
+        }, elem);
+        window.simulant.fire(elem, 'keydown', {
+            which: 13,
+            ctrlKey: true
+        });
+        expect(counter).toBe(1);
+    });
 });
 //# sourceMappingURL=ko-command.spec.js.map

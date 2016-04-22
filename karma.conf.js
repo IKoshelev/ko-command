@@ -18,6 +18,7 @@ module.exports = function(config) {
       'node_modules/q/q.js',
       'node_modules/knockout/build/output/knockout-latest.debug.js',
       'node_modules/jquery/dist/jquery.js',
+      'node_modules/simulant/dist/simulant.umd.js',
       'lib/ko-command.js',
       'test/*.spec.js',
     ],
