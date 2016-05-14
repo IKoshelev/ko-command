@@ -90,7 +90,7 @@ type result<T> = T | Q.Promise<T>;
 
         command.canExecuteRaw.subscribe(function (resultOrResultPromise) {
 
-            if ((<Q.Promise<boolean>>resultOrResultPromise).then) {
+            if (resultOrResultPromise && (<Q.Promise<boolean>>resultOrResultPromise).then) {
                 command.canExecute(false);
                 (<Q.Promise<boolean>>resultOrResultPromise).then(function(result) {
                     command.canExecute(result);
