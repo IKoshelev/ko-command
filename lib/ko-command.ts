@@ -146,7 +146,7 @@ interface KnockoutBindingHandlers {
 			}
 			if(commandExecuteOnEnter){
 				(<HTMLElement>element).addEventListener("keydown",(event) => {
-					if(event.which != 13 || command.canExecute() == false){
+					if(event.which != 13 || combinedDisableComputed()){
 						return;
 					}
 					event.preventDefault();
@@ -158,7 +158,7 @@ interface KnockoutBindingHandlers {
 			commandExecuteOnEvents = commandExecuteOnEvents || getCommandExecuteTriggers(element);
 			commandExecuteOnEvents.forEach((eventName) => {
 				(<HTMLElement>element).addEventListener(eventName, (event) => {
-					if(command.canExecute() == false){
+					if(combinedDisableComputed()){
 						return;
 					}
 					command.execute(viewModel, event);
