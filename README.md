@@ -36,9 +36,11 @@ The tests document the api quite will. In short, here it is:
         });
         console.log(com.canExecute());  //false       
 ```
-canExecute function will be wrapped in a computed, and canExecute observable 
+canExecute function will be wrapped in a computed, and will update canExecute observable 
 property on the resulting object. Since knockout observables are functions, you can just
 pass that as canExecute.
+
+It can also handle promises:
 
 ```javascript  
         var com = ko.command({
@@ -58,7 +60,7 @@ pass that as canExecute.
             console.log(newState);
         });  // will become true after 2 seconds
 ```
-Here is more realistic example of using can execute, showcasing both its computed nature and promise handling
+Here is more realistic example of using canExecute, showcasing both its computed nature and promise handling
 ```javascript
         var serviceCallLastResult = ko.observable();
 
@@ -80,7 +82,7 @@ Here is more realistic example of using can execute, showcasing both its compute
             }
         });
 
-        console.log(com.canExecute());                  //true, nooutgoing call in progress
+        console.log(com.canExecute());                  //true, no outgoing call in progress
 
         //serviceCallLastResult(service.someCall());    
         serviceCallLastResult(Q({}).delay(2000));       //simulate an outgoing call
