@@ -192,20 +192,20 @@ describe("ko.command ",()=>{
 			}
 		});
 		
-		expect(com.isExectuting()).toBe(false);
+		expect(com.isExecuting()).toBe(false);
 		
 		com.execute();
 
-		expect(com.isExectuting()).toBe(true);
+		expect(com.isExecuting()).toBe(true);
 		
 		Q({})	.delay(100)
 				.then(() => {
-					expect(com.isExectuting()).toBe(true);
+					expect(com.isExecuting()).toBe(true);
 					resolver({});
 				})
 				.delay(100)
 				.then(() => {
-					expect(com.isExectuting()).toBe(false);
+					expect(com.isExecuting()).toBe(false);
 				})
 				.done(done);
 	});

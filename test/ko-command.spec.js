@@ -139,17 +139,17 @@ describe("ko.command ", function () {
                 return prom;
             }
         });
-        expect(com.isExectuting()).toBe(false);
+        expect(com.isExecuting()).toBe(false);
         com.execute();
-        expect(com.isExectuting()).toBe(true);
+        expect(com.isExecuting()).toBe(true);
         Q({}).delay(100)
             .then(function () {
-            expect(com.isExectuting()).toBe(true);
+            expect(com.isExecuting()).toBe(true);
             resolver({});
         })
             .delay(100)
             .then(function () {
-            expect(com.isExectuting()).toBe(false);
+            expect(com.isExecuting()).toBe(false);
         })
             .done(done);
     });

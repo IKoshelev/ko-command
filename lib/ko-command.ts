@@ -5,7 +5,7 @@ interface KnockoutStatic {
 }
 
 interface command<TData,TEvent, TResult> extends commandFunction<TData,TEvent, TResult> {
-	isExectuting: KnockoutObservable<boolean>,
+	isExecuting: KnockoutObservable<boolean>,
 	canExecute: KnockoutObservable<boolean>,
 	canExecuteRaw: KnockoutComputed<result<boolean>>
 	execute:(data?: TData, event?: TEvent) => result<TResult>
@@ -43,12 +43,12 @@ type result<T> = T | Q.Promise<T>;
  
         if (resultOrResultPromise && resultOrResultPromise["finally"]) {
             resultOrResultPromise["finally"](function () {
-                command.isExectuting(false);
+                command.isExecuting(false);
             });
             return;
         }
  
-        command.isExectuting(false);
+        command.isExecuting(false);
     }
  
     function updateCanExecute(resultOrResultPromise : result<boolean>, 
@@ -57,12 +57,12 @@ type result<T> = T | Q.Promise<T>;
         if (resultOrResultPromise 
 			&& (<Q.Promise<any>>resultOrResultPromise)["finally"]) {
             (<Q.Promise<any>>resultOrResultPromise)["finally"](function () {
-                command.isExectuting(false);
+                command.isExecuting(false);
             });
             return;
         }
  
-        command.isExectuting(false);
+        command.isExecuting(false);
     }
  
  
@@ -75,10 +75,10 @@ type result<T> = T | Q.Promise<T>;
             return options.execute.apply(this, arguments);
         };
  
-        command.isExectuting = ko.observable(false);
+        command.isExecuting = ko.observable(false);
  
         command.execute = function () {
-            command.isExectuting(true);
+            command.isExecuting(true);
             var resultOrResultPromise = options.execute.apply(this, arguments);
             setIsExecutingToFalse(resultOrResultPromise, command);
             return resultOrResultPromise;
@@ -135,10 +135,10 @@ interface KnockoutBindingHandlers {
 			}
 			
 			var combinedDisableComputed = ko.computed(function(){
-				return command.canExecute() == false || command.isExectuting();
+				return command.canExecute() == false || command.isExecuting();
 			});
 			combinedDisableComputed.subscribe((state) => (<HTMLButtonElement>element).disabled = !!state);
-			(<HTMLButtonElement>element).disabled = (command.canExecute() == false || command.isExectuting());
+			(<HTMLButtonElement>element).disabled = (command.canExecute() == false || command.isExecuting());
 
 			var commandExecuteOnEnter = ko.unwrap<boolean>(allBindingsAccessor.get('commandExecuteOnEnter'));
 			if(typeof commandExecuteOnEnter == "undefined"){
