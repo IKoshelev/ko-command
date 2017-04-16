@@ -1,12 +1,11 @@
- 
-# Knockout JS command pattern implementation (command object and binding). 
+ # Knockout JS command pattern implementation (command object and binding). 
 
 The project came about because several existing implementations of kommand pattern 
 for Knockout either did not have the functionality our project needed or were not properly
 covered with tests.
 
 ### ko.command object
-The tests document the api quite will. In short, here it is:
+The tests document the api quite well. In short, here it is:
 
 ```javascript
         var counter = 0;
