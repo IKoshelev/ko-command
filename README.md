@@ -1,4 +1,4 @@
- # Knockout JS command pattern implementation (command object and binding). 
+# Knockout JS command pattern implementation (command object and binding). 
 
 The project came about because several existing implementations of kommand pattern 
 for Knockout either did not have the functionality our project needed or were not properly
@@ -108,7 +108,7 @@ There is also functionality to indicate if an async command is in progress via p
         }); // finished in 2 secconds.
 ```
 
-###command binding
+### command binding
 You can use command binding with the command object
 ```html
     <button data-bind="command: myCommand">execute</button>
@@ -116,7 +116,7 @@ You can use command binding with the command object
 ```
 It will trigger command on click event. It will disable the button while the comannd is executing, if
 a promise is returned to track that. It will be disabled based on canExecute function if one is passed.
-*<a> links can't be disabled, but the command will still not be triggered if canExecute or isExecuting 
+* '&lt;a&gt;' links can't be disabled, but the command will still not be triggered if canExecute or isExecuting 
 forbids it.
 
 You can choose to trigger command on enter key
@@ -124,7 +124,7 @@ You can choose to trigger command on enter key
     <input type="text" data-bind="command: myCommand, commandExecuteOnEnter: true"></input>
 ```
 
-or ony other set of events
+or any other set of events
 ```html
     <input type="text" data-bind="command: myCommand, commandExecuteOnEvents: ['blur']"></input>
 ```
