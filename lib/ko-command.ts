@@ -150,7 +150,12 @@ interface KnockoutBindingHandlers {
 						return;
 					}
 					event.preventDefault();
-					command.execute(viewModel, event);
+					var result = command.execute(viewModel, event);
+					if(result 
+						&& 'done' in result 
+						&& typeof result.done === "function"){
+						result.done();
+					}
 				});
 			}
 			
@@ -161,7 +166,12 @@ interface KnockoutBindingHandlers {
 					if(combinedDisableComputed()){
 						return;
 					}
-					command.execute(viewModel, event);
+					var result = command.execute(viewModel, event);
+					if(result 
+						&& 'done' in result 
+						&& typeof result.done === "function"){
+						result.done();
+					}
 				});
 			});
 			

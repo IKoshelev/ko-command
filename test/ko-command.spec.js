@@ -18,7 +18,8 @@ describe("ko.command ", function () {
             execute: function (d, e) {
                 counter += 1;
                 return true;
-            } });
+            }
+        });
         com();
         expect(counter).toBe(1);
         com.execute();
@@ -220,6 +221,21 @@ describe("ko.bindingHandlers.command ", function () {
             expect($elem.prop('disabled')).toBe(false);
         })
             .done(done);
+    });
+    it("when command returns object with 'done' method (usually promise) - 'done' will be called after execution", function () {
+        var doneWasCalled = false;
+        var promiseLikeObject = {
+            done: function () { return doneWasCalled = true; }
+        };
+        var com = ko.command({
+            execute: function (d, e) {
+                return promiseLikeObject;
+            }
+        });
+        var $elem = $(createBinding(com));
+        expect($elem.prop('disabled')).toBe(false);
+        $elem.click();
+        expect(doneWasCalled).toBe(true);
     });
     it("commands allow to specify triggers for execute in binding", function () {
         var counter = 0;

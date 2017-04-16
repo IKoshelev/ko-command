@@ -95,7 +95,7 @@ describe("ko.command ",()=>{
 		expect(com.canExecute()).toBe(true);
 	});
 	
-	it('canExecute function can return a Promise<boolean>',(done)=> {
+	it('canExecute function can return a Promise<boolean>',(done:() => void)=> {
 		
 		var resolver: any;		
 		var prom = Q.Promise<boolean>((resolve) => {resolver = resolve;});
@@ -120,7 +120,7 @@ describe("ko.command ",()=>{
 				.done(done);
 	});
 	
-	it('when canExecute observable<Promise<boolean>> is passed, it is used',(done)=> {
+	it('when canExecute observable<Promise<boolean>> is passed, it is used',(done:() => void)=> {
 		
 		var canExecute = ko.observable(Q(false));
 				
@@ -148,7 +148,7 @@ describe("ko.command ",()=>{
 				.done(done);
 	});
 	
-	it('when canExecute observable<Promise<boolean>> is rejected, canExecute stays false',(done)=> {
+	it('when canExecute observable<Promise<boolean>> is rejected, canExecute stays false',(done:() => void)=> {
 		
 		var canExecute = ko.observable(Q(false));
 				
@@ -181,7 +181,7 @@ describe("ko.command ",()=>{
 				.done(done);
 	});
 	
-	it('command function can return a promise, which will be used to set isExecuting',(done)=> {
+	it('command function can return a promise, which will be used to set isExecuting',(done:() => void)=> {
 		
 		var resolver: any;		
 		var prom = Q.Promise<any>((resolve) => {resolver = resolve;});
@@ -281,7 +281,7 @@ describe("ko.bindingHandlers.command ",()=>{
 		expect(counter).toBe(1);
 	});
 	
-	it("commands returning promises will disable element while promise is pending",(done)=>{
+	it("commands returning promises will disable element while promise is pending",(done:() => void)=>{
 		
 		var resolver: any;		
 		var prom = Q.Promise<any>((resolve) => {resolver = resolve;});
@@ -309,6 +309,28 @@ describe("ko.bindingHandlers.command ",()=>{
 					 expect($elem.prop('disabled')).toBe(false);
 				 })
 				 .done(done);
+	});
+
+	it("when command returns object with 'done' method (usually promise) - 'done' will be called after execution",()=>{
+		
+		var doneWasCalled = false;
+		var promiseLikeObject = {
+			done: () => doneWasCalled = true
+		}
+				
+		var com = ko.command({
+			execute:(d,e) => {
+				return promiseLikeObject;
+			}
+		});
+
+ 		var $elem = $(createBinding(com));
+		 
+		 expect($elem.prop('disabled')).toBe(false);
+		 
+		 $elem.click();
+		 
+		 expect(doneWasCalled).toBe(true);
 	});
 	
 	it("commands allow to specify triggers for execute in binding",()=>{
