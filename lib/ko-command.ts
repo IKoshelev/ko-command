@@ -1,3 +1,6 @@
+//https://github.com/IKoshelev/ko-command v.1.0.1
+//license - https://opensource.org/licenses/MIT
+
 interface KnockoutStatic {
 	command<TData,TEvent, TResult>(
 		options: commandFunction<TData,TEvent, TResult> | commandOptions<TData,TEvent, TResult>): 

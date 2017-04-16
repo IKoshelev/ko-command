@@ -1,3 +1,4 @@
+/// <reference path="../typings/tsd.d.ts" />
 describe("ko.command ", function () {
     it('should exist', function () {
         expect(ko.command).toBeDefined();
